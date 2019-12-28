@@ -1,0 +1,684 @@
+{% extends "gateway_health/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+                <div class="app-main__outer">
+                    <div class="app-main__inner">
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+                                <div class="page-title-heading">
+                                    <div class="page-title-icon">
+                                        <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                                        </i>
+                                    </div>
+                                    <div>Gateway HealthCheck
+                                        <div class="page-title-subheading">Um checkup para garantir que tudo esteja funcionando!
+                                        </div>
+                                    </div>
+                                </div>
+   
+                            </div>
+                        </div>            
+                        <div class="row">
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-midnight-bloom">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Sensores</div>
+                                            <div class="widget-subheading">Sensores Cadastrados</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white"><span>{{SensorsAvailable}}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-arielle-smile">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Sensores </div>
+                                            <div class="widget-subheading">Sensores Ativos</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white"><span>{{SensorsActive}}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-grow-early">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Sensores</div>
+                                            <div class="widget-subheading">Sensores Inativos</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white"><span>{{SensorInactive}}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">Mensagens Recebidas</div>
+                                                <div class="widget-subheading">Iniciado em %date%</div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-success">{{ReceivedMessages}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">Mensagens enviadas</div>
+                                                <div class="widget-subheading">para sensores</div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-warning">{{SentMessages_ToSensor}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">Mensagens Enviadas</div>
+                                                <div class="widget-subheading">para AppMoove</div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-danger">{{ForwardedMessages}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header">Status dos Serviços
+                                        <div class="btn-actions-pane-right">
+                                            <div role="group" class="btn-group-sm btn-group">
+                                                <button class="active btn btn-focus">Detalhes</button>
+                                                <button class="btn btn-focus">All Month</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">Visto por ultimo em </th>
+                                                <th>Visto por:</th>
+                                                <th></th>
+                                                <th class="text-center">Serviço</th>
+                                                <th class="text-center">LoadState</th>
+                                                <th class="text-center">ActiveState</th>
+                                                <th class="text-center">RunningState</th>
+                                                <th class="text-center">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            <tr>
+                                                <td class="text-center text-muted">#345</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+                                                                <div class="widget-content-left">
+                                                                    <img width="40" class="rounded-circle" src="{% static '/assets/images/avatars/4.jpg'%}" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading">John Doe</div>
+                                                                <div class="widget-subheading opacity-7">Web Developer</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><i class="pe-7s-paper-plane"> </i></td>
+                                                <td class="text-center ">PacketForwarder</td>
+                                                <td class="text-center">
+                                                    {% if PktFwd_LoadState == 'not-found'%}
+                                                    <div class="badge badge-warning">{{PktFwd_LoadState}}</div>
+                                                    {% elif  PktFwd_LoadState == 'loaded'%}
+                                                    <div class="badge badge-success">{{PktFwd_LoadState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{PktFwd_LoadState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if PktFwd_ActiveState == 'inactive'%}
+                                                    <div class="badge badge-warnning">{{PktFwd_ActiveState}}</div>
+                                                    {% elif PktFwd_ActiveState == 'active'%}
+                                                    <div class="badge badge-success">{{PktFwd_ActiveState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{PktFwd_ActiveState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if PktFwd_RunningState != 'running'%}
+                                                    <div class="badge badge-warning">{{PktFwd_RunningState}}</div>
+                                                    {% elif PktFwd_RunningState == 'running'%}
+                                                    <div class="badge badge-success">{{PktFwd_RunningState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{PktFwd_RunningState}}</div>
+                                                    {% endif %}
+                                                </td>                                                                                                    
+                                                      
+                                                <td class="text-center">
+                                                    <form action ="{% url 'gateway-action' service='pktfwd' %}">
+                                                    <button type="submit" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Detalhes</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center text-muted">#347</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+                                                                <div class="widget-content-left">
+                                                                    <img width="40" class="rounded-circle" src="{% static '/assets/images/avatars/3.jpg'%}" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading">Ruben Tillman</div>
+                                                                <div class="widget-subheading opacity-7">Etiam sit amet orci eget</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center "><i class="pe-7s-map"> </i></td>
+                                                <td class="text-center">LoRa-App-Server</td>
+                                                <td class="text-center">
+                                                    {% if LoRaApp_LoadState == 'not-found'%}
+                                                    <div class="badge badge-warning">{{LoRaApp_LoadState}}</div>
+                                                    {% elif LoRaApp_LoadState == 'loaded'%}
+                                                    <div class="badge badge-success">{{LoRaApp_LoadState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{LoRaApp_LoadState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if LoRaApp_ActiveState == 'inactive'%}
+                                                    <div class="badge badge-warnning">{{LoRaApp_ActiveState}}</div>
+                                                    {% elif LoRaApp_ActiveState == 'active'%}
+                                                    <div class="badge badge-success">{{LoRaApp_ActiveState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{LoRaApp_ActiveState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if LoRaApp_RunningState != 'running'%}
+                                                    <div class="badge badge-warning">{{LoRaApp_RunningState}}</div>
+                                                    {% elif LoRaApp_RunningState == 'running'%}
+                                                    <div class="badge badge-success">{{LoRaApp_RunningState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{LoRaApp_RunningState}}</div>
+                                                    {% endif %}
+                                                </td> 
+                                                <td class="text-center">
+                                                    <form action ="{% url 'gateway-action' service='LoRaApp' %}">
+                                                    <button type="submit" id="PopoverCustomT-2" class="btn btn-primary btn-sm">Detalhes</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center text-muted">#321</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+                                                                <div class="widget-content-left">
+                                                                    <img width="40" class="rounded-circle" src="{% static '/assets/images/avatars/2.jpg'%}" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading">Elliot Huber</div>
+                                                                <div class="widget-subheading opacity-7">Lorem ipsum dolor sic</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center "><i class="pe-7s-news-paper"> </i></td>
+                                                <td class="text-center">LoRaServer</td>
+                                                <td class="text-center">
+                                                    {% if loraserver_LoadState == 'not-found'%}
+                                                    <div class="badge badge-warning">{{LoRaApp_LoadState}}</div>
+                                                    {% elif loraserver_LoadState == 'loaded'%}
+                                                    <div class="badge badge-success">{{loraserver_LoadState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{loraserver_LoadState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if loraserver_ActiveState == 'inactive'%}
+                                                    <div class="badge badge-warnning">{{loraserver_ActiveState}}</div>
+                                                    {% elif loraserver_ActiveState == 'active'%}
+                                                    <div class="badge badge-success">{{loraserver_ActiveState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{loraserver_ActiveState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if loraserver_RunningState != 'running'%}
+                                                    <div class="badge badge-warning">{{loraserver_RunningState}}</div>
+                                                    {% elif loraserver_RunningState == 'running'%}
+                                                    <div class="badge badge-success">{{loraserver_RunningState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{loraserver_RunningState}}</div>
+                                                    {% endif %}
+                                                </td> 
+                                                <td class="text-center">
+                                                    <form action ="{% url 'gateway-action' service='loraserver' %}">
+                                                    <button type="submit" id="PopoverCustomT-3" class="btn btn-primary btn-sm">Detalhes</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center text-muted">#55</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+                                                                <div class="widget-content-left">
+                                                                    <img width="40" class="rounded-circle" src="{% static '/assets/images/avatars/1.jpg'%}" alt=""></div>
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading">Vinnie Wagstaff</div>
+                                                                <div class="widget-subheading opacity-7">UI Designer</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center "><i class="pe-7s-share"> </i></td>
+                                                <td class="text-center">LoRa-Gateway-bridge</td>
+                                                <td class="text-center">
+                                                    {% if LoRaGateway_LoadState == 'not-found'%}
+                                                    <div class="badge badge-warning">{{LoRaGateway_LoadState}}</div>
+                                                    {% elif LoRaGateway_LoadState == 'loaded'%}
+                                                    <div class="badge badge-success">{{LoRaGateway_LoadState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{LoRaGateway_LoadState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if LoRaGateway_ActiveState == 'inactive'%}
+                                                    <div class="badge badge-warnning">{{LoRaGateway_ActiveState}}</div>
+                                                    {% elif LoRaGateway_ActiveState == 'active'%}
+                                                    <div class="badge badge-success">{{LoRaGateway_ActiveState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{LoRaGateway_ActiveState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if LoRaGateway_RunningState != 'running'%}
+                                                    <div class="badge badge-warning">{{LoRaGateway_RunningState}}</div>
+                                                    {% elif LoRaGateway_RunningState == 'running'%}
+                                                    <div class="badge badge-success">{{LoRaGateway_RunningState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{LoRaGateway_RunningState}}</div>
+                                                    {% endif %}
+                                                </td> 
+                                                <td class="text-center">
+                                                    <form action ="{% url 'gateway-action' service='LoRaGateway' %}">
+                                                    <button type="submit" id="PopoverCustomT-4" class="btn btn-primary btn-sm">Detalhes</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center text-muted">#324</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+                                                                <div class="widget-content-left">
+                                                                    <img width="40" class="rounded-circle" src="{% static '/assets/images/avatars/1.jpg'%}" alt=""></div>
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading">Visdfas Wagasdasdasf</div>
+                                                                <div class="widget-subheading opacity-7">UI asdasdaasr</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center "><i class="pe-7s-angle-up-circle"> </i></td>
+                                                <td class="text-center">Gunicorn</td>
+                                                <td class="text-center">
+                                                    {% if gunicorn_LoadState == 'not-found'%}
+                                                    <div class="badge badge-warning">{{gunicorn_LoadState}}</div>
+                                                    {% elif gunicorn_LoadState == 'loaded'%}
+                                                    <div class="badge badge-success">{{gunicorn_LoadState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{gunicorn_LoadState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if gunicorn_ActiveState == 'inactive'%}
+                                                    <div class="badge badge-warnning">{{gunicorn_ActiveState}}</div>
+                                                    {% elif gunicorn_ActiveState == 'active'%}
+                                                    <div class="badge badge-success">{{gunicorn_ActiveState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{gunicorn_ActiveState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if gunicorn_RunningState != 'running'%}
+                                                    <div class="badge badge-warning">{{gunicorn_RunningState}}</div>
+                                                    {% elif gunicorn_RunningState == 'running'%}
+                                                    <div class="badge badge-success">{{gunicorn_RunningState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{gunicorn_RunningState}}</div>
+                                                    {% endif %}
+                                                </td> 
+                                                <td class="text-center">
+                                                    <form action ="{% url 'gateway-action' service='gunicorn' %}">
+                                                    <button type="submit" id="PopoverCustomT-5" class="btn btn-primary btn-sm">Detalhes</button>
+                                                    </form>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center text-muted">#5234</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+                                                                <div class="widget-content-left">
+                                                                    <img width="40" class="rounded-circle" src="{% static '/assets/images/avatars/1.jpg'%}" alt=""></div>
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading">Visadsdasdase Wasdasdadff</div>
+                                                                <div class="widget-subheading opacity-7">asdasdasdagner</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center "><i class="pe-7s-cloud-download"> </i></td>
+                                                <td class="text-center">nginx</td>
+                                                <td class="text-center">
+                                                    {% if nginx_LoadState == 'not-found'%}
+                                                    <div class="badge badge-warning">{{nginx_LoadState}}</div>
+                                                    {% elif nginx_LoadState == 'loaded'%}
+                                                    <div class="badge badge-success">{{nginx_LoadState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{nginx_LoadState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if nginx_ActiveState == 'inactive'%}
+                                                    <div class="badge badge-warnning">{{nginx_ActiveState}}</div>
+                                                    {% elif nginx_ActiveState == 'active'%}
+                                                    <div class="badge badge-success">{{nginx_ActiveState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{nginx_ActiveState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if nginx_RunningState != 'running'%}
+                                                    <div class="badge badge-warning">{{nginx_RunningState}}</div>
+                                                    {% elif nginx_RunningState == 'running'%}
+                                                    <div class="badge badge-success">{{nginx_RunningState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{nginx_RunningState}}</div>
+                                                    {% endif %}
+                                                </td> 
+                                                <td class="text-center">
+                                                    <form action ="{% url 'gateway-action' service='nginx' %}">
+                                                    <button type="submit" id="PopoverCustomT-6" class="btn btn-primary btn-sm">Detalhes</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center text-muted">#54</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+                                                                <div class="widget-content-left">
+                                                                    <img width="40" class="rounded-circle" src="{% static '/assets/images/avatars/1.jpg'%}" alt=""></div>
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading">adsfasdf dfsasd</div>
+                                                                <div class="widget-subheading opacity-7">dsafsdfwqere</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center "><i class="pe-7s-repeat"> </i></td>
+                                                <td class="text-center">Watchdog</td>
+                                                <td class="text-center">
+                                                    {% if watchdog_LoadState == 'not-found'%}
+                                                    <div class="badge badge-warning">{{watchdog_LoadState}}</div>
+                                                    {% elif watchdog_LoadState == 'loaded'%}
+                                                    <div class="badge badge-success">{{watchdog_LoadState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{watchdog_LoadState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if watchdog_ActiveState == 'inactive'%}
+                                                    <div class="badge badge-warnning">{{watchdog_ActiveState}}</div>
+                                                    {% elif watchdog_ActiveState == 'active'%}
+                                                    <div class="badge badge-success">{{watchdog_ActiveState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{watchdog_ActiveState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if watchdog_RunningState != 'running'%}
+                                                    <div class="badge badge-warning">{{watchdog_RunningState}}</div>
+                                                    {% elif watchdog_RunningState == 'running'%}
+                                                    <div class="badge badge-success">{{watchdog_RunningState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{watchdog_RunningState}}</div>
+                                                    {% endif %}
+                                                </td> 
+                                                <td class="text-center">
+                                                    <form action ="{% url 'gateway-action' service='watchdog' %}">
+                                                    <button type="submit" id="PopoverCustomT-7" class="btn btn-primary btn-sm">Detalhes</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center text-muted">#512314</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+                                                                <div class="widget-content-left">
+                                                                    <img width="40" class="rounded-circle" src="{% static '/assets/images/avatars/1.jpg'%}" alt=""></div>
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading">Vi asfda</div>
+                                                                <div class="widget-subheading opacity-7">asdagner</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center "><i class="pe-7s-clock"> </i></td>
+                                                <td class="text-center">Crontab</td>
+                                                <td class="text-center">
+                                                    {% if crontab_LoadState == 'not-found'%}
+                                                    <div class="badge badge-warning">{{crontab_LoadState}}</div>
+                                                    {% elif crontab_LoadState == 'loaded'%}
+                                                    <div class="badge badge-success">{{crontab_LoadState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{crontab_LoadState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if crontab_ActiveState == 'inactive'%}
+                                                    <div class="badge badge-warnning">{{crontab_ActiveState}}</div>
+                                                    {% elif crontab_ActiveState == 'active'%}
+                                                    <div class="badge badge-success">{{crontab_ActiveState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{crontab_ActiveState}}</div>
+                                                    {% endif %}
+                                                </td>    
+                                                <td class="text-center">
+                                                    {% if crontab_RunningState != 'running'%}
+                                                    <div class="badge badge-warning">{{crontab_RunningState}}</div>
+                                                    {% elif crontab_RunningState == 'running'%}
+                                                    <div class="badge badge-success">{{crontab_RunningState}}</div>
+                                                    {% else %}
+                                                    <div class="badge badge-danger">{{crontab_RunningState}}</div>
+                                                    {% endif %}
+                                                </td> 
+                                                <td class="text-center">
+                                                    <form  method="get" action ="{% url 'gateway-action' service='crontab' %}">
+                                                    <button type="submit" id="PopoverCustomT-8" class="btn btn-primary btn-sm">Detalhes</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-block text-center card-footer">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card-shadow-danger mb-3 widget-chart widget-chart2 text-left card">
+                                    <div class="widget-content">
+                                        <div class="widget-content-outer">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left pr-2 fsize-1">
+                                                    <div class="widget-numbers mt-0 fsize-3 text-danger">{{disk}}%</div>
+                                                </div>
+                                                <div class="widget-content-right w-100">
+                                                    <div class="progress-bar-xs progress">
+                                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{disk}}" aria-valuemin="0" aria-valuemax="100" style="width: {{disk}}%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left fsize-1">
+                                                <div class="text-muted opacity-6">Status do disco</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card-shadow-success mb-3 widget-chart widget-chart2 text-left card">
+                                    <div class="widget-content">
+                                        <div class="widget-content-outer">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left pr-2 fsize-1">
+                                                    <div class="widget-numbers mt-0 fsize-3 text-success">{{db}}%</div>
+                                                </div>
+                                                <div class="widget-content-right w-100">
+                                                    <div class="progress-bar-xs progress">
+                                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{db}}" aria-valuemin="0" aria-valuemax="100" style="width: {{db}}%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left fsize-1">
+                                                <div class="text-muted opacity-6">Tamanho do Banco</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card-shadow-warning mb-3 widget-chart widget-chart2 text-left card">
+                                    <div class="widget-content">
+                                        <div class="widget-content-outer">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left pr-2 fsize-1">
+                                                    <div class="widget-numbers mt-0 fsize-3 text-warning">{{memory}}%</div>
+                                                </div>
+                                                <div class="widget-content-right w-100">
+                                                    <div class="progress-bar-xs progress">
+                                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{memory}}" aria-valuemin="0" aria-valuemax="100" style="width: {{memory}}%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left fsize-1">
+                                                <div class="text-muted opacity-6">Memoria</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card-shadow-info mb-3 widget-chart widget-chart2 text-left card">
+                                    <div class="widget-content">
+                                        <div class="widget-content-outer">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left pr-2 fsize-1">
+                                                    <div class="widget-numbers mt-0 fsize-3 text-info">{{cpu}}%</div>
+                                                </div>
+                                                <div class="widget-content-right w-100">
+                                                    <div class="progress-bar-xs progress">
+                                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="{{cpu}}" aria-valuemin="0" aria-valuemax="100" style="width: {{cpu}}%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left fsize-1">
+                                                <div class="text-muted opacity-6">Uso do Processador</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-wrapper-footer">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 1
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 2
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="app-footer-right">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 3
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                <div class="badge badge-success mr-1 ml-0">
+                                                    <small>NEW</small>
+                                                </div>
+                                                Footer Link 4
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+{% endblock %}

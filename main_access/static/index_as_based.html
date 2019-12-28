@@ -1,0 +1,191 @@
+{% extends "gateway_health/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+ 
+                <div class="app-main__outer">
+                    <div class="app-main__inner">
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+                                <div class="page-title-heading">
+                                    <div class="page-title-icon">
+                                        <i class="pe-7s-display1 icon-gradient bg-premium-dark">
+                                        </i>
+                                    </div>
+                                    <div>Enviar Comandos para o sensor
+                                        <div class="page-title-subheading">Lembre-se que a informaçao nao e instantanea.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="page-title-actions">
+                                    <button type="button" data-toggle="tooltip" title="Example Tooltip" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
+                                        <i class="fa fa-star"></i>
+                                    </button>
+                                    <div class="d-inline-block dropdown">
+                                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
+                                            <span class="btn-icon-wrapper pr-2 opacity-7">
+                                                <i class="fa fa-business-time fa-w-20"></i>
+                                            </span>
+                                            Filtrar
+                                        </button>
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        <i class="nav-link-icon lnr-inbox"></i>
+                                                        <span>
+                                                            Somente sensores funcionando
+                                                        </span>
+                                                        <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        <i class="nav-link-icon lnr-book"></i>
+                                                        <span>
+                                                            Sensores com alta latencia
+                                                        </span>
+                                                        <div class="ml-auto badge badge-pill badge-danger">5</div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>    </div>
+                        </div>            
+                        <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+                            <li class="nav-item">
+                                <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="#tab-content-0">
+                                    <span>Multiplos Sensores</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a role="tab" class="nav-link" id="tab-1" data-toggle="tab" href="#tab-content-1">
+                                    <span>Um Sensor</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
+                                    <span>Comandos especiais</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                                <form method="POST" class="post-form">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="main-card mb-3 card">
+                                                <div class="card-body"><h5 class="card-title">Varios sensores</h5>
+                                                    <form class="">
+
+                                                    <div class="col-md-5">
+                                                        <div class="position-relative form-group"><label for="exampleSelectMulti" class="">Selecione os sensores por devEUI:</label><select multiple="" name="MultipleSensors" id="exampleSelectMulti" class="form-control">
+                                                        {% for s in Sensors %}
+                                                        <option>{{s.devEUI}}</option>
+                                                        {% endfor%}
+
+                                                        </select></div>
+                                                    </div>
+                                                        <div class="position-relative form-group"><label for="exampleText" class="">Mensagem em hexadecimal</label><textarea name="text" id="exampleText" class="form-control" required></textarea></div>
+
+                                                        <button class="mt-1 btn btn-primary">Enviar!</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
+                            <form method="POST" class="post-form">
+                                    {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="main-card mb-3 card">
+                                            <div class="card-body"><h5 class="card-title">Somente Um Sensor</h5>
+                                                <div>
+                                                    <div class="position-relative form-group"><label for="exampleCustomSelect" class="">Selecione o devEUI</label><select type="select" id="exampleCustomSelect" name="OnlyOneSensor" class="custom-select">
+                                                       
+                                                        {% for s in Sensors %}
+                                                        <option>{{s.devEUI}}</option>
+                                                        {% endfor%}
+
+                                                    </select></div>
+                                                    <div class="position-relative form-group"><label for="exampleText" class="">Mensagem em hexadecimal</label><textarea name="text" id="exampleText" class="form-control" required></textarea></div>
+                                                    <button class="mt-1 btn btn-primary">Enviar!</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                            
+                            <div class="tab-pane tabs-animation fade" id="tab-content-2" role="tabpanel">
+                                <form method="POST" class="post-form">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="main-card mb-3 card">
+                                            <div class="card-body"><h5 class="card-title">Comandos especiais</h5>
+                                                <div>
+                                                    <div class="position-relative form-group"><label for="exampleCustomSelect" class="">Selecione o devEUI</label><select type="select" id="exampleCustomSelect" name="SpecialCmdSelect" class="custom-select">
+                                                        
+                                                        {% for s in Sensors %}
+                                                        <option>{{s.devEUI}}</option>
+                                                        {% endfor%}
+
+                                                    </select></div>
+                                                    <div class="position-relative form-group"><label for="exampleText" class="">Mensagem em hexadecimal</label><textarea name="text" id="exampleText" class="form-control" required></textarea></div>
+                                                    <button class="mt-1 btn btn-primary" type="submit">Enviar!</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-wrapper-footer">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 1
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 2
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="app-footer-right">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 3
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                <div class="badge badge-success mr-1 ml-0">
+                                                    <small>NEW</small>
+                                                </div>
+                                                Footer Link 4
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+
+{% endblock %}
+

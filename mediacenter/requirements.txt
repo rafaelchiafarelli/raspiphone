@@ -1,0 +1,13 @@
+dbus-python==1.2.12
+decorator==4.4.1
+evento==1.0.1
+omxplayer-wrapper==0.3.2
+paho-mqtt==1.5.0
+pathlib2==2.3.5
+pkg-resources==0.0.0
+python-vlc==3.0.7110
+redcmd==1.2.10
+redlib==1.5.7
+six==1.12.0
+vlc-ctrl==1.0.8
+zope.interface==4.6.0

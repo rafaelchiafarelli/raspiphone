@@ -1,0 +1,221 @@
+{% extends "landpage/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="app-page-title"> 
+	        <div class="page-title-wrapper">
+	            <div class="page-title-heading">
+	                <div class="page-title-icon">
+	                    <i class="pe-7s-car icon-gradient bg-mean-fruit">
+	                    </i>
+	                </div>
+	
+					<div class="search-wrapper active">
+	                    <div class="input-holder">
+	                        <input type="text" class="search-input" placeholder="Type to search" id="search"  onkeyup="myFunction()">
+	                        <div class="search-icon"><span></span></div>
+	                    </div>
+	                    <button class="close"></button>
+	                </div>
+	            </div>
+	
+	
+				<div class="page-title-actions">
+	                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Recarregar os dados">
+						<a href="{% url 'reload-files' %}">
+	                    	<i class="fa fa-star"></i>
+						</a>
+	                </button>
+	            </div>
+			</div>
+		</div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-card mb-3 card">
+				<form class='my-ajax-form' method='POST' action='.' >
+                    <div class="card-body"><h5 class="card-title">Todas as mídias</h5>
+                        <table class="mb-0 table" id="table">
+                            <thead>
+                            <tr>
+                                <th class="text-center">Nome</th>
+								<th class="text-center">Progresso</th>
+                                <th class="text-center">Play/Pause</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for media in media_list %}
+	                            <tr>
+	                                <td class="text-center">
+										{{media}}
+	                                </td>
+									<td class="text-center">	
+	                                <div class="mb-3 progress">
+                                        <div class="progress-bar progress-bar-animated bg-success progress-bar-striped" 
+												role="progressbar" 
+												aria-valuenow="0" 
+												aria-valuemin="0" 
+												aria-valuemax="100" 
+												style="width: 0%;">
+										</div>
+                                    </div>
+	                                </td>
+	                                <td class="text-center">							
+										<p class="mb-2 mr-2 btn-transition btn btn-outline-success" id="music{{media.id}}" onclick="playButton({{media.id}})" data-url="{% url 'play-media' %}">Tocar</p>
+                                    </td>
+	                                
+	                            </tr>
+	                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+				</form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app-wrapper-footer">
+        <div class="app-footer">
+            <div class="app-footer__inner">
+
+            </div>
+        </div>
+    </div>   
+<script>
+function resetButtons(){
+	for (var i = 1; i < {{allmedia_amount}}; i++) {
+		var name = 'music'+i.toString()		
+		$buttons = document.getElementById(name)
+		if($buttons){
+		$buttons.innerHTML = 'Tocar'
+		$buttons.className ="mb-2 mr-2 btn-transition btn btn-outline-success"
+		}
+    }
+}
+</script>
+<script>
+
+function playButton(id) {
+	resetButtons();
+	var name = 'music'+id
+	$current_button = document.getElementById(name)
+	$current_button.innerHTML = 'Tocando'
+	$current_button.className = "mb-2 mr-2 btn btn-success"
+    $.ajax({
+        url: '{% url 'play-media' %}',
+        data: {
+			method: "POST",
+            id: id
+        },
+        dataType : 'json',
+		success: function(returned, status, xhr) {
+		        var result = returned['success']; // this will be translated into 'true' in JS, not 'True' as string
+		        if (result) { 
+		            console.log("sucesso")
+		        } else {
+		            console.log("falha")
+					location.href = "{% url 'mediacenter-list' %}"
+		        }
+		    }
+    })
+}
+</script>
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+<script>
+function mySimpleButtonSearch(FileName) {
+  file = FileName.split("/")
+  filter = file[file.length-1].toUpperCase()
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+		return tr[i].getElementsByTagName("td")[2];
+      }
+    }       
+  }
+	return -1
+}
+
+</script>
+<script>
+function mySimpleProgressSearch(FileName) {
+  file = FileName.split("/")
+  filter = file[file.length-1].toUpperCase()
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+		return tr[i].getElementsByTagName("td")[1];
+      }
+    }       
+  }
+	return -1
+}
+
+</script>
+<script>
+setInterval(function(){ 
+	$.ajax({
+        url: '{% url 'read-status' %}',
+        data: {
+			method: "POST",
+        },
+        dataType : 'json',
+		success: function(returned, status, xhr) {
+				var st = returned['status']
+				// preserve newlines, etc - use valid JSON
+				var json = JSON.parse(st);
+				if (json["is_playing"] === false){
+					resetButtons();						
+				} else {
+			        var FileName = json['FileName'] // this will be translated into 'true' in JS, not 'True' as string
+					result = mySimpleProgressSearch(FileName)
+			        if (result){
+						collection = result.getElementsByTagName("div")[0]
+						collection.getElementsByTagName("div")[0].setAttribute("aria-valuenow", json['Progress']);
+						collection.getElementsByTagName("div")[0].style = "width: " + json["Progress"] + "%; ";
+					}
+					$current_button = mySimpleButtonSearch(FileName)
+					if($current_button){
+						$current_button.innerHTML = 'Tocando'
+						$current_button.className = "mb-2 mr-2 btn btn-success"
+					}
+				}
+		    }
+    })
+}, 2000);
+</script>
+
+<script>
+$(document).ready(function(){
+
+})
+</script>
+{% endblock %}

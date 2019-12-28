@@ -1,0 +1,98 @@
+{% extends "gateway_health/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+                <div class="app-main__outer">
+                    <div class="app-main__inner">
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+                                <div class="page-title-heading">
+                                    <div class="page-title-icon">
+                                        <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                                        </i>
+                                    </div>
+                                    <div>Gateway HealthCheck
+                                        <div class="page-title-subheading">Um checkup para garantir que tudo esteja funcionando!
+                                        </div>
+                                    </div>
+                                </div>
+   
+                            </div>
+                        </div>            
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header">Status do Serviço {{status.RuntimeDirectoryPreserve}}
+                                        <div class="btn-actions-pane-right">
+                                            <div role="group" class="btn-group-sm btn-group">
+                                                <button class="active btn btn-focus">Alguma açao</button>
+                                                <button class="btn btn-focus">All Month</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">Variavel</th>
+                                                <th></th>
+                                                <th class="text-center">valor</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for key, values in status.items %}
+                                            <tr>
+                                                <td class="text-center text-muted">{{key}}</td>
+                                                <td class="text-center">
+                                                     <a href="http://www.google.com/search?q={{service}} {{key}}" class="metismenu-icon pe-7s-help1"></a>
+                                                    </a>
+                                                <td class="text-center ">{{values}}</td>
+                                            </tr>
+                                           {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-block text-center card-footer">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    <div class="app-wrapper-footer">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 1
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 2
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="app-footer-right">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 3
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                <div class="badge badge-success mr-1 ml-0">
+                                                    <small>NEW</small>
+                                                </div>
+                                                Footer Link 4
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+{% endblock %}

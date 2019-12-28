@@ -1,0 +1,107 @@
+{% extends "landpage/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                        </i>
+                    </div>
+                    <div>Listagem das medias
+                        <div class="page-title-subheading">Todas as mídias estao aqui! ;-) Divirta-se!
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>            
+        <div class="row">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content bg-midnight-bloom">
+                    <div class="widget-content-wrapper text-white">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">Músicas</div>
+                            <div class="widget-subheading">Quantidade de Músicas</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers text-white"><span>{{musics_amount}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content bg-arielle-smile">
+                    <div class="widget-content-wrapper text-white">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">Vídeos</div>
+                            <div class="widget-subheading">Quantidade de Vídeos</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers text-white"><span>{{video_amount}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3 widget-content bg-premium-dark">
+                    <div class="widget-content-wrapper text-white">
+                        <div class="widget-content-left">
+                            <div class="widget-heading">Todos</div>
+                            <div class="widget-subheading">Todas as mídias</div>
+                        </div>
+                        <div class="widget-content-right">
+                            <div class="widget-numbers text-white"><span>{{media_list.count()}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+        
+            <div class="col-lg-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body"><h5 class="card-title">Todas as medias</h5>
+                        <table class="mb-0 table">
+                            <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Comprimento</th>
+                                <th>Tipo</th>
+                                <th>Play</th>
+                                <th>Enfileirar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for media in media_list %}
+	                            <tr>
+	                                <td>
+										{{media.Name}}
+	                                </td>
+	                                <td>{{media.size}}</td>
+	                                <td>{{media.Type}}</td>
+	                                
+	                                <td>PlayIcon</td>
+	                                <td>Enfileirar</td>
+	                            </tr>
+	                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="app-wrapper-footer">
+        <div class="app-footer">
+            <div class="app-footer__inner">
+
+            </div>
+        </div>
+    </div>   
+{% endblock %}

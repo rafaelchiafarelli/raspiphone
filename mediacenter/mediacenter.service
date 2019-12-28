@@ -1,0 +1,12 @@
+[Unit]
+Description=Mediacenter Service
+After=network-online.target
+
+[Service]
+ExecStart=/home/pi/mediacenter/venv/bin/python3 /home/pi/mediacenter/mediacenter.py
+RemainAfterExit=no
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
