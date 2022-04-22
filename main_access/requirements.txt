@@ -1,6 +1,6 @@
 dbus-python==1.2.12
 decorator==4.4.1
-Django==2.2.6
+Django==2.2.28
 django-console==0.4.7
 django-rest-framework==0.1.0
 djangorestframework==3.10.3
